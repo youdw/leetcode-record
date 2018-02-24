@@ -13,9 +13,7 @@ import java.util.Stack;
 public class SolutionPre {
 
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        preOrder(root, result);
-        return result;
+        return preOrderIteratively(root);
     }
 
     /**
@@ -39,28 +37,26 @@ public class SolutionPre {
      * 迭代方式解决
      *
      * @param root
-     * @param result
      */
-    private void preOrderIteratively(TreeNode root, List<Integer> result) {
+    private List<Integer> preOrderIteratively(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
         Stack<TreeNode> nodeStack = new Stack<TreeNode>();
-        if (root == null) {
-            return;
-        }
-        nodeStack.push(root);
-        while (!nodeStack.empty()) {
-            TreeNode node = nodeStack.peek();
-
-            if (node.left == null && node.right == null) {
-                nodeStack.pop();
+        if (root != null) {
+            nodeStack.push(root);
+            while (!nodeStack.empty()) {
+                TreeNode node = nodeStack.pop();
+                result.add(node.val);
+                if (node.right != null) {
+                    nodeStack.push(node.right);
+                }
+                if (node.left != null) {
+                    nodeStack.push(node.left);
+                }
             }
-
-            if (node.left != null) {
-                nodeStack.push(node.left);
-            }
-
-
         }
+        return result;
 
     }
+
 
 }
